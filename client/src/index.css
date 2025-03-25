@@ -1,4 +1,4 @@
-/* @import "tailwindcss";
+@import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -116,9 +116,9 @@
   body {
     @apply bg-background text-foreground;
   }
-} */
+}
 
-@import "tailwindcss";
+/* @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -186,4 +186,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
+} */

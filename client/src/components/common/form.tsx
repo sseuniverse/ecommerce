@@ -14,8 +14,8 @@ import React from "react";
 
 interface CommonFormProps {
   formControls: FormControl[];
-  formData: { [key: string]: any; status: string };
-  setFormData: React.Dispatch<React.SetStateAction<{ [key: string]: any; status: string }>>;
+  formData: { [key: string]: any };
+  setFormData: React.Dispatch<React.SetStateAction<{ [key: string]: any }>>;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   buttonText?: string;
   isBtnDisabled?: boolean;
