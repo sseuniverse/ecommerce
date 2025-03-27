@@ -68,9 +68,16 @@ const fetchCartItems = async (req, res) => {
     });
 
     if (!cart) {
-      return res.status(404).json({
-        success: false,
-        message: "Cart not found!",
+      const newlyCreatedCart = new Cart({ userId });
+      await newlyCreatedCart.save();
+
+      // return res.status(404).json({
+      //   success: false,
+      //   message: "Cart not found!",
+      // });
+      return res.status(201).json({
+        success: true,
+        data: newlyCreatedCart,
       });
     }
 
