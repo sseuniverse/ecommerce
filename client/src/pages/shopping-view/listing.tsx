@@ -53,7 +53,7 @@ export default function ShoppingListing() {
   const categorySearchParam = searchParams.get("category");
 
   function handleSort(value: string) {
-    setSort(value);
+    setSort(value as SortParams);
   }
 
   function handleGetProductDetails(getCurrentProductId: string) {
