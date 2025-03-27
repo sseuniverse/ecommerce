@@ -21,7 +21,7 @@ const ProductImageUpload: React.FC<ProductImageUploadProps> = ({
   imageFile,
   setImageFile,
   imageLoadingState,
-  uploadedImageUrl,
+  // uploadedImageUrl,
   setUploadedImageUrl,
   setImageLoadingState,
   isEditMode,

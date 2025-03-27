@@ -74,8 +74,8 @@ export interface ProductProps {
   updatedAt: string;
 }
 
-interface CartItemsProps {
-  productId: ProductProps["_id"] | ProductProps;
+export interface CartItemsProps extends ProductProps {
+  productId: ProductProps["_id"];
   quantity: number;
 }
 

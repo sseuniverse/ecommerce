@@ -18,11 +18,11 @@ const initialState: InitialState = {
   orderDetails: null,
 };
 
-interface OrderData {}
+// interface OrderData {}
 
 export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
-  async (orderData) => {
+  async (orderData: any) => {
     const response = await axios.post("/shop/order/create", orderData);
     return response.data;
   }

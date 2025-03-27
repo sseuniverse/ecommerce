@@ -1,19 +1,23 @@
 import { Minus, Plus, Trash } from "lucide-react";
 import { Button } from "../ui/button";
-import { useDispatch, useSelector } from "react-redux";
 import { deleteCartItem, updateCartQuantity } from "@/store/shop/cart-slice";
 import { useToast } from "../ui/use-toast";
+import { CartItemsProps, CartProps } from "@/types";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 
-function UserCartItemsContent({ cartItem }) {
-  const { user } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state) => state.shopCart);
-  const { productList } = useSelector((state) => state.shopProducts);
-  const dispatch = useDispatch();
+function UserCartItemsContent({ cartItem }: { cartItem: CartItemsProps }) {
+  const { user } = useAppSelector((state) => state.auth);
+  const { cartItems } = useAppSelector((state) => state.shopCart);
+  const { productList } = useAppSelector((state) => state.shopProducts);
+  const dispatch = useAppDispatch();
   const { toast } = useToast();
 
-  function handleUpdateQuantity(getCartItem, typeOfAction) {
+  function handleUpdateQuantity(
+    getCartItem: any,
+    typeOfAction: "plus" | "minus"
+  ) {
     if (typeOfAction == "plus") {
-      let getCartItems = cartItems.items || [];
+      let getCartItems = cartItems?.items || ([] as CartProps["items"]);
 
       if (getCartItems.length) {
         const indexOfCurrentCartItem = getCartItems.findIndex(
@@ -21,7 +25,7 @@ function UserCartItemsContent({ cartItem }) {
         );
 
         const getCurrentProductIndex = productList.findIndex(
-          (product) => product.id === getCartItem?.productId
+          (product) => product._id === getCartItem?.productId
         );
         const getTotalStock = productList[getCurrentProductIndex].totalStock;
 
@@ -59,9 +63,9 @@ function UserCartItemsContent({ cartItem }) {
     });
   }
 
-  function handleCartItemDelete(getCartItem) {
+  function handleCartItemDelete(getCartItem: any) {
     dispatch(
-      deleteCartItem({ userId: user?.id, productId: getCartItem?.productId })
+      deleteCartItem({ userId: user?.id!, productId: getCartItem?.productId })
     ).then((data) => {
       if (data?.payload?.success) {
         toast({

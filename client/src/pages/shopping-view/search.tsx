@@ -73,9 +73,10 @@ export default function SearchProducts() {
   }
 
   function handleGetProductDetails(getCurrentProductId: string) {
-    // console.log(getCurrentProductId);
     dispatch(fetchProductDetails(getCurrentProductId));
   }
+
+  console.log(searchParams)
 
   useEffect(() => {
     if (productDetails !== null) setOpenDetailsDialog(true);

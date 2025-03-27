@@ -2,8 +2,15 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import UserCartItemsContent from "./cart-items-content";
+import { CartItemsProps } from "@/types";
+import React from "react";
 
-function UserCartWrapper({ cartItems, setOpenCartSheet }) {
+interface Props {
+  cartItems: CartItemsProps[];
+  setOpenCartSheet: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function UserCartWrapper({ cartItems, setOpenCartSheet }: Props) {
   const navigate = useNavigate();
 
   const totalCartAmount =

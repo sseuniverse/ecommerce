@@ -8,12 +8,14 @@ import { createNewOrder } from "@/store/shop/order-slice";
 // import { Navigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppDispatch, useAppSelector } from "@/store/store";
+import { AddressProps } from "@/types";
 
 function ShoppingCheckout() {
   const { cartItems } = useAppSelector((state) => state.shopCart);
   const { user } = useAppSelector((state) => state.auth);
   const { approvalURL } = useAppSelector((state) => state.shopOrder);
-  const [currentSelectedAddress, setCurrentSelectedAddress] = useState(null);
+  const [currentSelectedAddress, setCurrentSelectedAddress] =
+    useState<AddressProps | null>(null);
   const [isPaymentStart, setIsPaymemntStart] = useState(false);
   const dispatch = useAppDispatch();
   const { toast } = useToast();
@@ -25,7 +27,7 @@ function ShoppingCheckout() {
       ? cartItems.items.reduce(
           (sum, currentItem) =>
             sum +
-            (currentItem?.productId?.salePrice > 0
+            (currentItem?.salePrice > 0
               ? currentItem?.salePrice
               : currentItem?.price) *
               currentItem?.quantity,
@@ -34,6 +36,7 @@ function ShoppingCheckout() {
       : 0;
 
   function handleInitiatePaypalPayment() {
+    // @ts-expect-error
     if (cartItems.length === 0) {
       toast({
         title: "Your cart is empty. Please add items to proceed",
@@ -54,7 +57,7 @@ function ShoppingCheckout() {
     const orderData = {
       userId: user?.id,
       cartId: cartItems?._id,
-      cartItems: cartItems.items.map((singleCartItem) => ({
+      cartItems: cartItems?.items.map((singleCartItem) => ({
         productId: singleCartItem?.productId,
         title: singleCartItem?.title,
         image: singleCartItem?.image,

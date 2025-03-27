@@ -22,8 +22,10 @@ const initialAddressFormData = {
 };
 
 interface AddressPropsC {
-  setCurrentSelectedAddress?: (address: any) => void; // Replace 'any' with the actual type if known
-  selectedId?: string | null; // Adjust the type based on your application's requirements
+  setCurrentSelectedAddress?: React.Dispatch<
+    React.SetStateAction<AddressProps | null>
+  >; // Replace 'any' with the actual type if known
+  selectedId?: AddressProps | null; // Adjust the type based on your application's requirements
 }
 
 function Address({ setCurrentSelectedAddress, selectedId }: AddressPropsC) {
@@ -121,7 +123,7 @@ function Address({ setCurrentSelectedAddress, selectedId }: AddressPropsC) {
         {addressList && addressList.length > 0
           ? addressList.map((singleAddressItem) => (
               <AddressCard
-                selectedId={{ id: selectedId! }}
+                selectedId={{ id: selectedId?._id! }}
                 handleDeleteAddress={handleDeleteAddress}
                 addressInfo={singleAddressItem}
                 handleEditAddress={handleEditAddress}

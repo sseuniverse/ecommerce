@@ -1,11 +1,16 @@
-import { useSelector } from "react-redux";
 import { Badge } from "../ui/badge";
 import { DialogContent } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Separator } from "../ui/separator";
+import { OrderProps } from "@/types";
+import { useAppSelector } from "@/store/store";
 
-function ShoppingOrderDetailsView({ orderDetails }) {
-  const { user } = useSelector((state) => state.auth);
+interface Props {
+  orderDetails: OrderProps | null;
+}
+
+function ShoppingOrderDetailsView({ orderDetails }: Props) {
+  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <DialogContent className="sm:max-w-[600px]">
@@ -69,7 +74,7 @@ function ShoppingOrderDetailsView({ orderDetails }) {
           <div className="grid gap-2">
             <div className="font-medium">Shipping Info</div>
             <div className="grid gap-0.5 text-muted-foreground">
-              <span>{user.userName}</span>
+              <span>{user?.userName}</span>
               <span>{orderDetails?.addressInfo?.address}</span>
               <span>{orderDetails?.addressInfo?.city}</span>
               <span>{orderDetails?.addressInfo?.pincode}</span>
