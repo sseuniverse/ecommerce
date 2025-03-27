@@ -1,7 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axios } from "@/lib/axios";
+import { FeatureProps } from "@/types";
 
-const initialState = {
+interface InitialState {
+  isLoading: boolean;
+  featureImageList: FeatureProps[];
+}
+
+const initialState: InitialState = {
   isLoading: false,
   featureImageList: [],
 };

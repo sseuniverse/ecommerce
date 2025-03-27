@@ -1,15 +1,31 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axios } from "@/lib/axios";
+import { ProductProps } from "@/types";
 
-const initialState = {
+interface InitialState {
+  isLoading: boolean;
+  productList: ProductProps[];
+  productDetails: ProductProps | null;
+}
+
+const initialState: InitialState = {
   isLoading: false,
   productList: [],
   productDetails: null,
 };
 
+interface FetchAllFilteredProducts {
+  filterParams: Record<string, any>;
+  sortParams:
+    | "price-lowtohigh"
+    | "price-hightolow"
+    | "title-atoz"
+    | "title-ztoa";
+}
+
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchAllProducts",
-  async ({ filterParams, sortParams }: any) => {
+  async ({ filterParams, sortParams }: FetchAllFilteredProducts) => {
     console.log(fetchAllFilteredProducts, "fetchAllFilteredProducts");
 
     const query = new URLSearchParams({
@@ -17,23 +33,16 @@ export const fetchAllFilteredProducts = createAsyncThunk(
       sortBy: sortParams,
     });
 
-    const result = await axios.get(
-      `/shop/products/get?${query}`
-    );
-
+    const result = await axios.get(`/shop/products/get?${query}`);
     console.log(result);
-
     return result?.data;
   }
 );
 
 export const fetchProductDetails = createAsyncThunk(
   "/products/fetchProductDetails",
-  async (id) => {
-    const result = await axios.get(
-      `/shop/products/get/${id}`
-    );
-
+  async (id: string) => {
+    const result = await axios.get(`/shop/products/get/${id}`);
     return result?.data;
   }
 );

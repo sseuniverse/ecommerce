@@ -16,7 +16,7 @@ interface AddressInfo {
 }
 
 export interface OrderProps {
-  _id: string;
+  id: string;
   userId: string;
   cartId: string;
   cartItems: CartItems[];
@@ -30,11 +30,11 @@ export interface OrderProps {
   paymentId: string;
   payerId: string;
   createdAt: string;
-  upstringdAt: string;
+  updatedAt: string;
 }
 
 export interface AddressProps {
-  _id: string;
+  id: string;
   userId: string;
   address: string;
   city: string;
@@ -42,11 +42,11 @@ export interface AddressProps {
   phone: string;
   notes: string;
   createdAt: string;
-  upstringdAt: string;
+  updatedAt: string;
 }
 
 export interface UserProps {
-  _id: string;
+  id: string;
   userName: string;
   email: string;
   role: "user" | "admin";
@@ -54,7 +54,7 @@ export interface UserProps {
 }
 
 export interface ProductProps {
-  _id: string;
+  id: string;
   image: string;
   title: string;
   description: string;
@@ -65,36 +65,36 @@ export interface ProductProps {
   totalStock: number;
   averageReview: number;
   createdAt: string;
-  upstringdAt: string;
+  updatedAt: string;
 }
 
 interface CartItemsProps {
-  productId: ProductProps["_id"] | ProductProps;
+  productId: ProductProps["id"] | ProductProps;
   quantity: number;
 }
 
 export interface CartProps {
-  _id: string;
-  userId: UserProps["_id"] | UserProps;
+  id: string;
+  userId: UserProps["id"] | UserProps;
   items: CartItemsProps[];
   createdAt: string;
-  upstringdAt: string;
+  updatedAt: string;
 }
 
 export interface FeatureProps {
-  _id: string;
+  id: string;
   image: string;
   createdAt: string;
-  upstringdAt: string;
+  updatedAt: string;
 }
 
 export interface ReviewProps {
-  _id: string;
+  id: string;
   productId: string;
   userId: string;
   userName: string;
   reviewMessage: string;
   reviewValue: number;
   createdAt: string;
-  upstringdAt: string;
+  updatedAt: string;
 }

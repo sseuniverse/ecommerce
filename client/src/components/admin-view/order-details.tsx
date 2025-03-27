@@ -9,7 +9,7 @@ import {
   getOrderDetailsForAdmin,
   updateOrderStatus,
 } from "@/store/admin/order-slice";
-import { toast } from "sonner";
+import { useToast } from "../ui/use-toast";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { OrderProps } from "@/types";
 
@@ -21,21 +21,22 @@ function AdminOrderDetailsView({ orderDetails }: { orderDetails: OrderProps }) {
   const [formData, setFormData] = useState(initialFormData);
   const { user } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const { toast } = useToast();
 
-  console.log(orderDetails, "orderDetailsorderDetails");
+  // console.log(orderDetails, "orderDetailsorderDetails");
 
   function handleUpdateStatus(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const { status } = formData;
 
     dispatch(
-      updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
+      updateOrderStatus({ id: orderDetails?.id, orderStatus: status })
     ).then((data) => {
       if (data?.payload?.success) {
-        dispatch(getOrderDetailsForAdmin(orderDetails?._id));
+        dispatch(getOrderDetailsForAdmin(orderDetails?.id));
         dispatch(getAllOrdersForAdmin());
         setFormData(initialFormData);
-        toast(data?.payload?.message);
+        toast({ title: data?.payload?.message });
       }
     });
   }
@@ -46,7 +47,7 @@ function AdminOrderDetailsView({ orderDetails }: { orderDetails: OrderProps }) {
         <div className="grid gap-2">
           <div className="flex mt-6 items-center justify-between">
             <p className="font-medium">Order ID</p>
-            <Label>{orderDetails?._id}</Label>
+            <Label>{orderDetails?.id}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Date</p>

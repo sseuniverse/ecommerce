@@ -14,9 +14,15 @@ const initialState: InitialState = {
   user: null,
 };
 
+interface RegisterFormData {
+  userName: string;
+  email: string;
+  password: string;
+}
+
 export const registerUser = createAsyncThunk(
   "/auth/register",
-  async (formData) => {
+  async (formData: RegisterFormData) => {
     const response = await axios.post("/auth/register", formData, {
       withCredentials: true,
     });
@@ -25,13 +31,21 @@ export const registerUser = createAsyncThunk(
   }
 );
 
-export const loginUser = createAsyncThunk("/auth/login", async (formData) => {
-  const response = await axios.post("/auth/login", formData, {
-    withCredentials: true,
-  });
+interface LoginFormData {
+  email: string;
+  password: string;
+}
 
-  return response.data;
-});
+export const loginUser = createAsyncThunk(
+  "/auth/login",
+  async (formData: LoginFormData) => {
+    const response = await axios.post("/auth/login", formData, {
+      withCredentials: true,
+    });
+
+    return response.data;
+  }
+);
 
 export const logoutUser = createAsyncThunk("/auth/logout", async () => {
   const response = await axios.post(

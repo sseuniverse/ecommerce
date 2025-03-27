@@ -1,7 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axios } from "@/lib/axios";
+import { OrderProps } from "@/types";
 
-const initialState = {
+interface InitialState {
+  approvalURL: string | null;
+  isLoading: boolean;
+  orderId: OrderProps["id"] | null;
+  orderList: OrderProps[];
+  orderDetails: OrderProps | null;
+}
+
+const initialState: InitialState = {
   approvalURL: null,
   isLoading: false,
   orderId: null,
@@ -33,7 +42,7 @@ export const capturePayment = createAsyncThunk(
 
 export const getAllOrdersByUserId = createAsyncThunk(
   "/order/getAllOrdersByUserId",
-  async (userId) => {
+  async (userId: string) => {
     const response = await axios.get(`/shop/order/list/${userId}`);
     return response.data;
   }
@@ -41,7 +50,7 @@ export const getAllOrdersByUserId = createAsyncThunk(
 
 export const getOrderDetails = createAsyncThunk(
   "/order/getOrderDetails",
-  async (id) => {
+  async (id: string) => {
     const response = await axios.get(`/shop/order/details/${id}`);
     return response.data;
   }

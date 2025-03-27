@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CommonForm from "../common/form";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { addressFormControls } from "@/config";
@@ -9,7 +9,7 @@ import {
   fetchAllAddresses,
 } from "@/store/shop/address-slice";
 import AddressCard from "./address-card";
-import { toast } from "sonner";
+import { useToast } from "../ui/use-toast";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 
 const initialAddressFormData = {
@@ -21,8 +21,8 @@ const initialAddressFormData = {
 };
 
 interface AddressProps {
-  setCurrentSelectedAddress: (address: any) => void; // Replace 'any' with the actual type if known
-  selectedId: string | null; // Adjust the type based on your application's requirements
+  setCurrentSelectedAddress?: (address: any) => void; // Replace 'any' with the actual type if known
+  selectedId?: string | null; // Adjust the type based on your application's requirements
 }
 
 function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
@@ -31,9 +31,9 @@ function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const { addressList } = useAppSelector((state) => state.shopAddress);
-  //   const { toast } = useToast();
+  const { toast } = useToast();
 
-  function handleManageAddress(event) {
+  function handleManageAddress(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (addressList.length >= 3 && currentEditedId === null) {
@@ -49,26 +49,26 @@ function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
     currentEditedId !== null
       ? dispatch(
           editaAddress({
-            userId: user?._id,
+            userId: user?.id!,
             addressId: currentEditedId,
             formData,
           })
         ).then((data) => {
           if (data?.payload?.success) {
-            dispatch(fetchAllAddresses(user?._id));
+            dispatch(fetchAllAddresses(user?.id!));
             setCurrentEditedId(null);
             setFormData(initialAddressFormData);
-            toast("Address updated successfully");
+            toast({ title: "Address updated successfully" });
           }
         })
       : dispatch(
           addNewAddress({
             ...formData,
-            userId: user?.id,
+            userId: user?.id ?? "",
           })
         ).then((data) => {
           if (data?.payload?.success) {
-            dispatch(fetchAllAddresses(user?.id));
+            dispatch(fetchAllAddresses(user?.id!));
             setFormData(initialAddressFormData);
             toast({
               title: "Address added successfully",
@@ -79,7 +79,7 @@ function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
 
   function handleDeleteAddress(getCurrentAddress) {
     dispatch(
-      deleteAddress({ userId: user?.id, addressId: getCurrentAddress._id })
+      deleteAddress({ userId: user?.id, addressId: getCurrentAddress.id })
     ).then((data) => {
       if (data?.payload?.success) {
         dispatch(fetchAllAddresses(user?.id));
@@ -91,7 +91,7 @@ function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
   }
 
   function handleEditAddress(getCuurentAddress) {
-    setCurrentEditedId(getCuurentAddress?._id);
+    setCurrentEditedId(getCuurentAddress?.id);
     setFormData({
       ...formData,
       address: getCuurentAddress?.address,
@@ -104,12 +104,12 @@ function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
 
   function isFormValid() {
     return Object.keys(formData)
-      .map((key) => formData[key].trim() !== "")
+      .map((key) => formData[key as keyof typeof formData].trim() !== "")
       .every((item) => item);
   }
 
   useEffect(() => {
-    dispatch(fetchAllAddresses(user?.id));
+    dispatch(fetchAllAddresses(user?.id!));
   }, [dispatch]);
 
   console.log(addressList, "addressList");
@@ -120,7 +120,7 @@ function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
         {addressList && addressList.length > 0
           ? addressList.map((singleAddressItem) => (
               <AddressCard
-                selectedId={selectedId}
+                selectedId={{ id: selectedId! }}
                 handleDeleteAddress={handleDeleteAddress}
                 addressInfo={singleAddressItem}
                 handleEditAddress={handleEditAddress}

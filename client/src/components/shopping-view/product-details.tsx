@@ -1,35 +1,41 @@
-import { StarIcon } from "lucide-react";
+// import { StarIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "../ui/use-toast";
 import { setProductDetails } from "@/store/shop/products-slice";
 import { Label } from "../ui/label";
 import StarRatingComponent from "../common/star-rating";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { addReview, getReviews } from "@/store/shop/review-slice";
+import { ProductProps } from "@/types";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 
-function ProductDetailsDialog({ open, setOpen, productDetails }) {
-  const [reviewMsg, setReviewMsg] = useState("");
-  const [rating, setRating] = useState(0);
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const { cartItems } = useSelector((state) => state.shopCart);
-  const { reviews } = useSelector((state) => state.shopReview);
+interface ProductProp {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  productDetails: ProductProps | null;
+}
+
+function ProductDetailsDialog({ open, setOpen, productDetails }: ProductProp) {
+  const [reviewMsg, setReviewMsg] = useState<string>("");
+  const [rating, setRating] = useState<number>(0);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const { cartItems } = useAppSelector((state) => state.shopCart);
+  const { reviews } = useAppSelector((state) => state.shopReview);
 
   const { toast } = useToast();
 
-  function handleRatingChange(getRating) {
-    console.log(getRating, "getRating");
-
+  function handleRatingChange(getRating: number) {
     setRating(getRating);
   }
 
-  function handleAddToCart(getCurrentProductId, getTotalStock) {
+  function handleAddToCart(getCurrentProductId: string, getTotalStock: number) {
     let getCartItems = cartItems.items || [];
 
     if (getCartItems.length) {
@@ -50,13 +56,15 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
     }
     dispatch(
       addToCart({
-        userId: user?.id,
+        userId: user?.id!,
         productId: getCurrentProductId,
         quantity: 1,
       })
     ).then((data) => {
       if (data?.payload?.success) {
-        dispatch(fetchCartItems(user?.id));
+        if (user?.id) {
+          dispatch(fetchCartItems(user.id));
+        }
         toast({
           title: "Product is added to cart",
         });
@@ -74,7 +82,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   function handleAddReview() {
     dispatch(
       addReview({
-        productId: productDetails?._id,
+        productId: productDetails?.id,
         userId: user?.id,
         userName: user?.userName,
         reviewMessage: reviewMsg,
@@ -84,7 +92,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
       if (data.payload.success) {
         setRating(0);
         setReviewMsg("");
-        dispatch(getReviews(productDetails?._id));
+        dispatch(getReviews(productDetails?.id));
         toast({
           title: "Review added successfully!",
         });
@@ -93,10 +101,10 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
   }
 
   useEffect(() => {
-    if (productDetails !== null) dispatch(getReviews(productDetails?._id));
+    if (productDetails !== null) dispatch(getReviews(productDetails?.id));
   }, [productDetails]);
 
-  console.log(reviews, "reviews");
+  // console.log(reviews, "reviews");
 
   const averageReview =
     reviews && reviews.length > 0
@@ -126,12 +134,12 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
           <div className="flex items-center justify-between">
             <p
               className={`text-3xl font-bold text-primary ${
-                productDetails?.salePrice > 0 ? "line-through" : ""
+                productDetails?.salePrice! > 0 ? "line-through" : ""
               }`}
             >
               ${productDetails?.price}
             </p>
-            {productDetails?.salePrice > 0 ? (
+            {productDetails?.salePrice! > 0 ? (
               <p className="text-2xl font-bold text-muted-foreground">
                 ${productDetails?.salePrice}
               </p>
@@ -155,8 +163,8 @@ function ProductDetailsDialog({ open, setOpen, productDetails }) {
                 className="w-full"
                 onClick={() =>
                   handleAddToCart(
-                    productDetails?._id,
-                    productDetails?.totalStock
+                    productDetails?.id!,
+                    productDetails?.totalStock!
                   )
                 }
               >

@@ -190,22 +190,22 @@ export const shoppingViewHeaderMenuItems: MenuLinks[] = [
   },
 ];
 
-export enum categoryOptionsMap {
-  men = "Men",
-  women = "Women",
-  kids = "Kids",
-  accessories = "Accessories",
-  footwear = "Footwear",
-}
+export const categoryOptionsMap = {
+  men: "Men",
+  women: "Women",
+  kids: "Kids",
+  accessories: "Accessories",
+  footwear: "Footwear",
+};
 
-export enum brandOptionsMap {
-  nike = "Nike",
-  adidas = "Adidas",
-  puma = "Puma",
-  levi = "Levi",
-  zara = "Zara",
-  "h&m" = "H&M",
-}
+export const brandOptionsMap = {
+  nike: "Nike",
+  adidas: "Adidas",
+  puma: "Puma",
+  levi: "Levi",
+  zara: "Zara",
+  "h&m": "H&M",
+};
 
 interface FilterOptions {
   category: SelectId[];

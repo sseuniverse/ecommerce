@@ -34,7 +34,7 @@ function AdminOrdersView() {
     dispatch(getAllOrdersForAdmin());
   }, [dispatch]);
 
-  console.log(orderDetails, "orderList");
+  // console.log(orderDetails, "orderList");
 
   useEffect(() => {
     if (orderDetails !== null) setOpenDetailsDialog(true);
@@ -62,7 +62,7 @@ function AdminOrdersView() {
             {orderList && orderList.length > 0
               ? orderList.map((orderItem) => (
                   <TableRow>
-                    <TableCell>{orderItem?._id}</TableCell>
+                    <TableCell>{orderItem?.id}</TableCell>
                     <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
                     <TableCell>
                       <Badge
@@ -88,7 +88,7 @@ function AdminOrdersView() {
                       >
                         <Button
                           onClick={() =>
-                            handleFetchOrderDetails(orderItem?._id)
+                            handleFetchOrderDetails(orderItem?.id)
                           }
                         >
                           View Details

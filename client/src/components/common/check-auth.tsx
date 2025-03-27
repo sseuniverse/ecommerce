@@ -3,8 +3,8 @@ import { Navigate, useLocation } from "react-router-dom";
 
 interface CheckAuthProps {
   isAuthenticated: boolean;
-  user: UserProps;
-  children: React.ReactNode;
+  user: UserProps | null;
+  children?: React.ReactNode;
 }
 
 function CheckAuth({ isAuthenticated, user, children }: CheckAuthProps) {

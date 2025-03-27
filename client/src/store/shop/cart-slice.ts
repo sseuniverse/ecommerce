@@ -1,14 +1,26 @@
 import { axios } from "@/lib/axios";
+import { CartProps } from "@/types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialState = {
+interface InitialState {
+  cartItems: CartProps[];
+  isLoading: boolean;
+}
+
+const initialState: InitialState = {
   cartItems: [],
   isLoading: false,
 };
 
+interface AddToCart {
+  userId: string;
+  productId: string;
+  quantity: number;
+}
+
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
-  async ({ userId, productId, quantity }: any) => {
+  async ({ userId, productId, quantity }: AddToCart) => {
     const response = await axios.post("/shop/cart/add", {
       userId,
       productId,
@@ -21,9 +33,8 @@ export const addToCart = createAsyncThunk(
 
 export const fetchCartItems = createAsyncThunk(
   "cart/fetchCartItems",
-  async (userId) => {
+  async (userId: string) => {
     const response = await axios.get(`/shop/cart/get/${userId}`);
-
     return response.data;
   }
 );

@@ -7,7 +7,7 @@ interface StarRatingProps {
 }
 
 function StarRatingComponent({ rating, handleRatingChange }: StarRatingProps) {
-  console.log(rating, "rating");
+  // console.log(rating, "rating");
 
   return [1, 2, 3, 4, 5].map((star) => (
     <Button

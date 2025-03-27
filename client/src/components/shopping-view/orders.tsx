@@ -11,33 +11,36 @@ import {
   TableRow,
 } from "../ui/table";
 import ShoppingOrderDetailsView from "./order-details";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import {
   getAllOrdersByUserId,
   getOrderDetails,
   resetOrderDetails,
 } from "@/store/shop/order-slice";
 import { Badge } from "../ui/badge";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 
 function ShoppingOrders() {
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const { orderList, orderDetails } = useSelector((state) => state.shopOrder);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const { orderList, orderDetails } = useAppSelector(
+    (state) => state.shopOrder
+  );
 
-  function handleFetchOrderDetails(getId) {
+  function handleFetchOrderDetails(getId: string) {
     dispatch(getOrderDetails(getId));
   }
 
   useEffect(() => {
-    dispatch(getAllOrdersByUserId(user?.id));
+    dispatch(getAllOrdersByUserId(user?.id!));
   }, [dispatch]);
 
   useEffect(() => {
     if (orderDetails !== null) setOpenDetailsDialog(true);
   }, [orderDetails]);
 
-  console.log(orderDetails, "orderDetails");
+  // console.log(orderDetails, "orderDetails");
 
   return (
     <Card>
@@ -61,7 +64,7 @@ function ShoppingOrders() {
             {orderList && orderList.length > 0
               ? orderList.map((orderItem) => (
                   <TableRow>
-                    <TableCell>{orderItem?._id}</TableCell>
+                    <TableCell>{orderItem?.id}</TableCell>
                     <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
                     <TableCell>
                       <Badge
@@ -86,9 +89,7 @@ function ShoppingOrders() {
                         }}
                       >
                         <Button
-                          onClick={() =>
-                            handleFetchOrderDetails(orderItem?._id)
-                          }
+                          onClick={() => handleFetchOrderDetails(orderItem?.id)}
                         >
                           View Details
                         </Button>

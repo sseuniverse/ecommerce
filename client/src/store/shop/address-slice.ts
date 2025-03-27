@@ -1,23 +1,37 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "@/lib/axios";
+import { AddressProps } from "@/types";
 
-const initialState = {
+interface InitialState {
+  isLoading: boolean;
+  addressList: AddressProps[];
+}
+
+const initialState: InitialState = {
   isLoading: false,
   addressList: [],
 };
 
+interface AddNewAddress {
+  address: string;
+  city: string;
+  phone: string;
+  pincode: string;
+  notes: string;
+  userId?: string
+}
+
 export const addNewAddress = createAsyncThunk(
   "/addresses/addNewAddress",
-  async (formData) => {
+  async (formData: AddNewAddress) => {
     const response = await axios.post("/shop/address/add", formData);
-
     return response.data;
   }
 );
 
 export const fetchAllAddresses = createAsyncThunk(
   "/addresses/fetchAllAddresses",
-  async (userId) => {
+  async (userId: string) => {
     const response = await axios.get(`/shop/address/get/${userId}`);
 
     return response.data;
@@ -33,7 +47,7 @@ export const editaAddress = createAsyncThunk(
   }: {
     userId: string;
     addressId: string;
-    formData: any;
+    formData: AddNewAddress;
   }) => {
     const response = await axios.put(
       `/shop/address/update/${userId}/${addressId}`,

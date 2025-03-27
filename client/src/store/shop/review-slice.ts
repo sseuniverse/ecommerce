@@ -1,30 +1,40 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axios } from "@/lib/axios";
+import { ReviewProps } from "@/types";
 
-const initialState = {
+interface InitialState {
+  isLoading: boolean;
+  reviews: ReviewProps[];
+}
+
+const initialState: InitialState = {
   isLoading: false,
   reviews: [],
 };
 
+interface AddReviewData {
+  productId: string | undefined;
+  userId: string | undefined;
+  userName: string | undefined;
+  reviewMessage: string;
+  reviewValue: number;
+}
+
 export const addReview = createAsyncThunk(
   "/order/addReview",
-  async (formdata) => {
-    const response = await axios.post(
-      `/shop/review/add`,
-      formdata
-    );
-
+  async (formdata: AddReviewData) => {
+    const response = await axios.post(`/shop/review/add`, formdata);
     return response.data;
   }
 );
 
-export const getReviews = createAsyncThunk("/order/getReviews", async (id) => {
-  const response = await axios.get(
-    `/shop/review/${id}`
-  );
-
-  return response.data;
-});
+export const getReviews = createAsyncThunk(
+  "/order/getReviews",
+  async (id: string | undefined) => {
+    const response = await axios.get(`/shop/review/${id}`);
+    return response.data;
+  }
+);
 
 const reviewSlice = createSlice({
   name: "reviewSlice",

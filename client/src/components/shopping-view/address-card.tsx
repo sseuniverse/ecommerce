@@ -8,7 +8,7 @@ interface AddressCardProps {
   handleDeleteAddress: (address: AddressProps) => void;
   handleEditAddress: (address: AddressProps) => void;
   setCurrentSelectedAddress?: (address: AddressProps) => void;
-  selectedId?: { _id: string };
+  selectedId?: { id: string };
 }
 
 function AddressCard({
@@ -26,7 +26,7 @@ function AddressCard({
           : undefined
       }
       className={`cursor-pointer border-red-700 ${
-        selectedId?._id === addressInfo?._id
+        selectedId?.id === addressInfo?.id
           ? "border-red-900 border-[4px]"
           : "border-black"
       }`}

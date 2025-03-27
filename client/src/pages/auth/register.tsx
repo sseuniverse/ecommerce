@@ -1,29 +1,37 @@
 import CommonForm from "@/components/common/form";
-import { loginFormControls } from "@/config";
-import { loginUser } from "@/store/auth-slice";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { registerFormControls } from "@/config";
+import { registerUser } from "@/store/auth-slice";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
+import { useAppDispatch } from "@/store/store";
 
-const initialState = {
+interface FormData {
+  userName: string;
+  email: string;
+  password: string;
+}
+
+const initialState: FormData = {
+  userName: "",
   email: "",
   password: "",
 };
 
-function AuthLogin() {
+function AuthRegister() {
   const [formData, setFormData] = useState(initialState);
-  const dispatch = useDispatch();
-  //   const { toast } = useToast();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
-  function onSubmit(event) {
+  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    dispatch(loginUser(formData)).then((data) => {
+    dispatch(registerUser(formData)).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data?.payload?.message,
         });
+        navigate("/auth/login");
       } else {
         toast({
           title: data?.payload?.message,
@@ -33,25 +41,27 @@ function AuthLogin() {
     });
   }
 
+  // console.log(formData);
+
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
         <h1 className="text-3xl font-bold tracking-tight text-foreground">
-          Sign in to your account
+          Create new account
         </h1>
         <p className="mt-2">
-          Don't have an account
+          Already have an account
           <Link
             className="font-medium ml-2 text-primary hover:underline"
-            to="/auth/register"
+            to="/auth/login"
           >
-            Register
+            Login
           </Link>
         </p>
       </div>
       <CommonForm
-        formControls={loginFormControls}
-        buttonText={"Sign In"}
+        formControls={registerFormControls}
+        buttonText={"Sign Up"}
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
@@ -60,4 +70,4 @@ function AuthLogin() {
   );
 }
 
-export default AuthLogin;
+export default AuthRegister;
