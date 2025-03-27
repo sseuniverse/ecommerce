@@ -15,8 +15,14 @@ interface AddressInfo {
   notes: string;
 }
 
+export type SortParams =
+  | "price-lowtohigh"
+  | "price-hightolow"
+  | "title-atoz"
+  | "title-ztoa";
+
 export interface OrderProps {
-  id: string;
+  _id: string;
   userId: string;
   cartId: string;
   cartItems: CartItems[];
@@ -34,7 +40,7 @@ export interface OrderProps {
 }
 
 export interface AddressProps {
-  id: string;
+  _id: string;
   userId: string;
   address: string;
   city: string;
@@ -54,7 +60,7 @@ export interface UserProps {
 }
 
 export interface ProductProps {
-  id: string;
+  _id: string;
   image: string;
   title: string;
   description: string;
@@ -69,12 +75,12 @@ export interface ProductProps {
 }
 
 interface CartItemsProps {
-  productId: ProductProps["id"] | ProductProps;
+  productId: ProductProps["_id"] | ProductProps;
   quantity: number;
 }
 
 export interface CartProps {
-  id: string;
+  _id: string;
   userId: UserProps["id"] | UserProps;
   items: CartItemsProps[];
   createdAt: string;
@@ -82,14 +88,14 @@ export interface CartProps {
 }
 
 export interface FeatureProps {
-  id: string;
+  _id: string;
   image: string;
   createdAt: string;
   updatedAt: string;
 }
 
 export interface ReviewProps {
-  id: string;
+  _id: string;
   productId: string;
   userId: string;
   userName: string;

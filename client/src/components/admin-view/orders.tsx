@@ -62,7 +62,7 @@ function AdminOrdersView() {
             {orderList && orderList.length > 0
               ? orderList.map((orderItem) => (
                   <TableRow>
-                    <TableCell>{orderItem?.id}</TableCell>
+                    <TableCell>{orderItem?._id}</TableCell>
                     <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
                     <TableCell>
                       <Badge
@@ -88,7 +88,7 @@ function AdminOrdersView() {
                       >
                         <Button
                           onClick={() =>
-                            handleFetchOrderDetails(orderItem?.id)
+                            handleFetchOrderDetails(orderItem?._id)
                           }
                         >
                           View Details

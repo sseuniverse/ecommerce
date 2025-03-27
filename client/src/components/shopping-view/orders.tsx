@@ -64,7 +64,7 @@ function ShoppingOrders() {
             {orderList && orderList.length > 0
               ? orderList.map((orderItem) => (
                   <TableRow>
-                    <TableCell>{orderItem?.id}</TableCell>
+                    <TableCell>{orderItem?._idid}</TableCell>
                     <TableCell>{orderItem?.orderDate.split("T")[0]}</TableCell>
                     <TableCell>
                       <Badge
@@ -89,7 +89,7 @@ function ShoppingOrders() {
                         }}
                       >
                         <Button
-                          onClick={() => handleFetchOrderDetails(orderItem?.id)}
+                          onClick={() => handleFetchOrderDetails(orderItem?._id)}
                         >
                           View Details
                         </Button>

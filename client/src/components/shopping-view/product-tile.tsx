@@ -7,7 +7,7 @@ import { ProductProps } from "@/types";
 interface ShoppingProps {
   product: ProductProps;
   handleGetProductDetails: (getCurrentProductId: string) => void;
-  handleAddtoCart: (getCurrentProductId: string) => void;
+  handleAddtoCart: (getCurrentProductId: string, getTotalStock: number) => void;
 }
 
 function ShoppingProductTile({
@@ -17,7 +17,7 @@ function ShoppingProductTile({
 }: ShoppingProps) {
   return (
     <Card className="w-full max-w-sm mx-auto">
-      <div onClick={() => handleGetProductDetails(product?.id)}>
+      <div onClick={() => handleGetProductDetails(product?._id)}>
         <div className="relative">
           <img
             src={product?.image}
@@ -75,8 +75,8 @@ function ShoppingProductTile({
           </Button>
         ) : (
           <Button
-            // onClick={() => handleAddtoCart(product?.id, product?.totalStock)}
-            onClick={() => handleAddtoCart(product?.id)}
+            // onClick={() => handleAddtoCart(product?._id, product?.totalStock)}
+            onClick={() => handleAddtoCart(product?._id, product.totalStock)}
             className="w-full"
           >
             Add to cart

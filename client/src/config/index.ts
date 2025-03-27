@@ -207,12 +207,12 @@ export const brandOptionsMap = {
   "h&m": "H&M",
 };
 
-interface FilterOptions {
-  category: SelectId[];
-  brand: SelectId[];
-}
+// interface FilterOptions {
+//   category: SelectId[];
+//   brand: SelectId[];
+// }
 
-export const filterOptions: FilterOptions = {
+export const filterOptions: Record<string, SelectId[]> = {
   category: [
     { id: "men", label: "Men" },
     { id: "women", label: "Women" },

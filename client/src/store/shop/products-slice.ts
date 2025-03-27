@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axios } from "@/lib/axios";
-import { ProductProps } from "@/types";
+import { ProductProps, SortParams } from "@/types";
 
 interface InitialState {
   isLoading: boolean;
@@ -16,17 +16,13 @@ const initialState: InitialState = {
 
 interface FetchAllFilteredProducts {
   filterParams: Record<string, any>;
-  sortParams:
-    | "price-lowtohigh"
-    | "price-hightolow"
-    | "title-atoz"
-    | "title-ztoa";
+  sortParams: SortParams;
 }
 
 export const fetchAllFilteredProducts = createAsyncThunk(
   "/products/fetchAllProducts",
   async ({ filterParams, sortParams }: FetchAllFilteredProducts) => {
-    console.log(fetchAllFilteredProducts, "fetchAllFilteredProducts");
+    // console.log(fetchAllFilteredProducts, "fetchAllFilteredProducts");
 
     const query = new URLSearchParams({
       ...filterParams,

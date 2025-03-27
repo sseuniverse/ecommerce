@@ -5,7 +5,7 @@ import { OrderProps } from "@/types";
 interface InitialState {
   approvalURL: string | null;
   isLoading: boolean;
-  orderId: OrderProps["id"] | null;
+  orderId: OrderProps["_id"] | null;
   orderList: OrderProps[];
   orderDetails: OrderProps | null;
 }
@@ -22,14 +22,19 @@ export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
     const response = await axios.post("/shop/order/create", orderData);
-
     return response.data;
   }
 );
 
+interface CapturePayments {
+  paymentId: string
+  payerId: string
+  orderId: string
+}
+
 export const capturePayment = createAsyncThunk(
   "/order/capturePayment",
-  async ({ paymentId, payerId, orderId }: any) => {
+  async ({ paymentId, payerId, orderId }: CapturePayments) => {
     const response = await axios.post("/shop/order/capture", {
       paymentId,
       payerId,

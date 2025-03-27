@@ -82,7 +82,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }: ProductProp) {
   function handleAddReview() {
     dispatch(
       addReview({
-        productId: productDetails?.id,
+        productId: productDetails?._id,
         userId: user?.id,
         userName: user?.userName,
         reviewMessage: reviewMsg,
@@ -92,7 +92,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }: ProductProp) {
       if (data.payload.success) {
         setRating(0);
         setReviewMsg("");
-        dispatch(getReviews(productDetails?.id));
+        dispatch(getReviews(productDetails?._id));
         toast({
           title: "Review added successfully!",
         });
@@ -101,7 +101,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }: ProductProp) {
   }
 
   useEffect(() => {
-    if (productDetails !== null) dispatch(getReviews(productDetails?.id));
+    if (productDetails !== null) dispatch(getReviews(productDetails?._id));
   }, [productDetails]);
 
   // console.log(reviews, "reviews");
@@ -163,7 +163,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }: ProductProp) {
                 className="w-full"
                 onClick={() =>
                   handleAddToCart(
-                    productDetails?.id!,
+                    productDetails?._id!,
                     productDetails?.totalStock!
                   )
                 }

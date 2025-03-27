@@ -11,6 +11,7 @@ import {
 import AddressCard from "./address-card";
 import { useToast } from "../ui/use-toast";
 import { useAppDispatch, useAppSelector } from "@/store/store";
+import { AddressProps } from "@/types";
 
 const initialAddressFormData = {
   address: "",
@@ -20,14 +21,14 @@ const initialAddressFormData = {
   notes: "",
 };
 
-interface AddressProps {
+interface AddressPropsC {
   setCurrentSelectedAddress?: (address: any) => void; // Replace 'any' with the actual type if known
   selectedId?: string | null; // Adjust the type based on your application's requirements
 }
 
-function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
+function Address({ setCurrentSelectedAddress, selectedId }: AddressPropsC) {
   const [formData, setFormData] = useState(initialAddressFormData);
-  const [currentEditedId, setCurrentEditedId] = useState(null);
+  const [currentEditedId, setCurrentEditedId] = useState<string | null>(null);
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const { addressList } = useAppSelector((state) => state.shopAddress);
@@ -77,12 +78,12 @@ function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
         });
   }
 
-  function handleDeleteAddress(getCurrentAddress) {
+  function handleDeleteAddress(getCurrentAddress: AddressProps) {
     dispatch(
-      deleteAddress({ userId: user?.id, addressId: getCurrentAddress.id })
+      deleteAddress({ userId: user?.id!, addressId: getCurrentAddress._id })
     ).then((data) => {
       if (data?.payload?.success) {
-        dispatch(fetchAllAddresses(user?.id));
+        dispatch(fetchAllAddresses(user?.id!));
         toast({
           title: "Address deleted successfully",
         });
@@ -90,8 +91,8 @@ function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
     });
   }
 
-  function handleEditAddress(getCuurentAddress) {
-    setCurrentEditedId(getCuurentAddress?.id);
+  function handleEditAddress(getCuurentAddress: AddressProps) {
+    setCurrentEditedId(getCuurentAddress?._id);
     setFormData({
       ...formData,
       address: getCuurentAddress?.address,
@@ -112,7 +113,7 @@ function Address({ setCurrentSelectedAddress, selectedId }: AddressProps) {
     dispatch(fetchAllAddresses(user?.id!));
   }, [dispatch]);
 
-  console.log(addressList, "addressList");
+  // console.log(addressList, "addressList");
 
   return (
     <Card>

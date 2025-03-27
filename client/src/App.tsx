@@ -13,6 +13,7 @@ import Loading from "./components/loading";
 import ShoppingLayout from "./components/shopping-view/layout";
 import ShoppingHome from "./pages/shopping-view/home";
 import ShoppingAccount from "./pages/shopping-view/account";
+import ShoppingListing from "./pages/shopping-view/listing";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useAppSelector(
@@ -25,8 +26,8 @@ function App() {
   }, [dispatch]);
 
   // if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
+  // console.log(isLoading, user);
   if (isLoading) return <Loading />;
-  console.log(isLoading, user);
 
   return (
     <div className="flex flex-col overflow-hidden bg-white">
@@ -61,6 +62,7 @@ function App() {
         >
           <Route path="home" element={<ShoppingHome />} />
           <Route path="account" element={<ShoppingAccount />} />
+          <Route path="listing" element={<ShoppingListing />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />

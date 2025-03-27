@@ -30,10 +30,10 @@ function AdminOrderDetailsView({ orderDetails }: { orderDetails: OrderProps }) {
     const { status } = formData;
 
     dispatch(
-      updateOrderStatus({ id: orderDetails?.id, orderStatus: status })
+      updateOrderStatus({ id: orderDetails?._id, orderStatus: status })
     ).then((data) => {
       if (data?.payload?.success) {
-        dispatch(getOrderDetailsForAdmin(orderDetails?.id));
+        dispatch(getOrderDetailsForAdmin(orderDetails?._id));
         dispatch(getAllOrdersForAdmin());
         setFormData(initialFormData);
         toast({ title: data?.payload?.message });
@@ -47,7 +47,7 @@ function AdminOrderDetailsView({ orderDetails }: { orderDetails: OrderProps }) {
         <div className="grid gap-2">
           <div className="flex mt-6 items-center justify-between">
             <p className="font-medium">Order ID</p>
-            <Label>{orderDetails?.id}</Label>
+            <Label>{orderDetails?._id}</Label>
           </div>
           <div className="flex mt-2 items-center justify-between">
             <p className="font-medium">Order Date</p>

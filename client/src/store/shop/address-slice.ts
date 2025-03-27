@@ -33,7 +33,6 @@ export const fetchAllAddresses = createAsyncThunk(
   "/addresses/fetchAllAddresses",
   async (userId: string) => {
     const response = await axios.get(`/shop/address/get/${userId}`);
-
     return response.data;
   }
 );
