@@ -1,14 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axios } from "@/lib/axios";
+import { ProductProps } from "@/types";
 
-const initialState = {
+interface InitialState {
+  isLoading: boolean;
+  productList: ProductProps[];
+}
+
+const initialState: InitialState = {
   isLoading: false,
   productList: [],
 };
 
 export const addNewProduct = createAsyncThunk(
   "/products/addnewproduct",
-  async (formData) => {
+  async (formData: any) => {
     const result = await axios.post("/admin/products/add", formData, {
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +48,7 @@ export const editProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   "/products/deleteProduct",
-  async (id) => {
+  async (id: string) => {
     const result = await axios.delete(`/admin/products/delete/${id}`);
     return result?.data;
   }

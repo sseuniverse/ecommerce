@@ -22,7 +22,7 @@ export const getFeatureImages = createAsyncThunk(
 
 export const addFeatureImage = createAsyncThunk(
   "/order/addFeatureImage",
-  async (image) => {
+  async (image: string) => {
     const response = await axios.post(`/common/feature/add`, { image });
     return response.data;
   }

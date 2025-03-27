@@ -30,7 +30,7 @@ export const fetchAllFilteredProducts = createAsyncThunk(
     });
 
     const result = await axios.get(`/shop/products/get?${query}`);
-    console.log(result);
+    // console.log(result);
     return result?.data;
   }
 );

@@ -1,12 +1,25 @@
 import { ProductProps } from "@/types";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
+import React from "react";
+
+interface InitialFormData {
+  image: string | null;
+  title: string;
+  description: string;
+  category: string;
+  brand: string;
+  price: number;
+  salePrice: number;
+  totalStock: number;
+  averageReview: number;
+}
 
 interface AdminProductTileProps {
   product: ProductProps;
-  setFormData: (product: ProductProps) => void;
-  setOpenCreateProductsDialog: (open: boolean) => void;
-  setCurrentEditedId: (id: string) => void;
+  setFormData: React.Dispatch<React.SetStateAction<InitialFormData>>;
+  setOpenCreateProductsDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  setCurrentEditedId: React.Dispatch<React.SetStateAction<string | null>>;
   handleDelete: (id: string) => void;
 }
 
@@ -47,7 +60,17 @@ function AdminProductTile({
             onClick={() => {
               setOpenCreateProductsDialog(true);
               setCurrentEditedId(product?._id);
-              setFormData(product);
+              setFormData({
+                image: product.image,
+                title: product.title,
+                description: product.description,
+                category: product.category,
+                brand: product.brand,
+                price: product.price,
+                salePrice: product.salePrice,
+                totalStock: product.totalStock,
+                averageReview: 0,
+              });
             }}
           >
             Edit

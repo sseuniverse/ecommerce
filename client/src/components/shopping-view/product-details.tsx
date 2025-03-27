@@ -28,7 +28,6 @@ function ProductDetailsDialog({ open, setOpen, productDetails }: ProductProp) {
   const { user } = useAppSelector((state) => state.auth);
   const { cartItems } = useAppSelector((state) => state.shopCart);
   const { reviews } = useAppSelector((state) => state.shopReview);
-
   const { toast } = useToast();
 
   function handleRatingChange(getRating: number) {
@@ -36,7 +35,7 @@ function ProductDetailsDialog({ open, setOpen, productDetails }: ProductProp) {
   }
 
   function handleAddToCart(getCurrentProductId: string, getTotalStock: number) {
-    let getCartItems = cartItems.items || [];
+    let getCartItems = cartItems?.items || [];
 
     if (getCartItems.length) {
       const indexOfCurrentItem = getCartItems.findIndex(

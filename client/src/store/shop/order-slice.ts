@@ -18,6 +18,8 @@ const initialState: InitialState = {
   orderDetails: null,
 };
 
+interface OrderData {}
+
 export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
   async (orderData) => {
@@ -27,9 +29,9 @@ export const createNewOrder = createAsyncThunk(
 );
 
 interface CapturePayments {
-  paymentId: string
-  payerId: string
-  orderId: string
+  paymentId: string;
+  payerId: string;
+  orderId: string;
 }
 
 export const capturePayment = createAsyncThunk(

@@ -1,19 +1,19 @@
 import { FileIcon, UploadCloudIcon, XIcon } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button } from "../ui/button";
 import { Skeleton } from "../ui/skeleton";
 import { axios } from "@/lib/axios";
 
 interface ProductImageUploadProps {
   imageFile: File | null;
-  setImageFile: (file: File | null) => void;
+  setImageFile: React.Dispatch<React.SetStateAction<File | null>>;
   imageLoadingState: boolean;
-  uploadedImageUrl: string | null;
-  setUploadedImageUrl: (url: string | null) => void;
+  uploadedImageUrl: string;
+  setUploadedImageUrl: React.Dispatch<React.SetStateAction<string>>;
   setImageLoadingState: (loading: boolean) => void;
-  isEditMode: boolean;
+  isEditMode?: boolean;
   isCustomStyling?: boolean;
 }
 
