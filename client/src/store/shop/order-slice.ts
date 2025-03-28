@@ -18,11 +18,40 @@ const initialState: InitialState = {
   orderDetails: null,
 };
 
-// interface OrderData {}
+interface OrderData {
+  userId: string | undefined;
+  cartId: string | undefined;
+  cartItems:
+    | {
+        productId: string;
+        title: string;
+        image: string;
+        price: number;
+        quantity: number;
+      }[]
+    | undefined;
+
+  addressInfo: {
+    addressId: string;
+    address: string;
+    city: string;
+    pincode: string;
+    phone: string;
+    notes: string;
+  };
+  orderStatus: "pending";
+  paymentMethod: "paypal";
+  paymentStatus: "pending";
+  totalAmount: number;
+  orderDate: Date;
+  orderUpdateDate: Date;
+  paymentId: string;
+  payerId: string;
+}
 
 export const createNewOrder = createAsyncThunk(
   "/order/createNewOrder",
-  async (orderData: any) => {
+  async (orderData: OrderData) => {
     const response = await axios.post("/shop/order/create", orderData);
     return response.data;
   }

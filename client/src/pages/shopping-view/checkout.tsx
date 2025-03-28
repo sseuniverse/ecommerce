@@ -10,6 +10,37 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { AddressProps } from "@/types";
 
+interface OrderData {
+  userId: string | undefined;
+  cartId: string | undefined;
+  cartItems:
+    | {
+        productId: string;
+        title: string;
+        image: string;
+        price: number;
+        quantity: number;
+      }[]
+    | undefined;
+
+  addressInfo: {
+    addressId: string;
+    address: string;
+    city: string;
+    pincode: string;
+    phone: string;
+    notes: string;
+  };
+  orderStatus: "pending";
+  paymentMethod: "paypal";
+  paymentStatus: "pending";
+  totalAmount: number;
+  orderDate: Date;
+  orderUpdateDate: Date;
+  paymentId: string;
+  payerId: string;
+}
+
 function ShoppingCheckout() {
   const { cartItems } = useAppSelector((state) => state.shopCart);
   const { user } = useAppSelector((state) => state.auth);
@@ -54,7 +85,7 @@ function ShoppingCheckout() {
       return;
     }
 
-    const orderData = {
+    const orderData: OrderData = {
       userId: user?.id,
       cartId: cartItems?._id,
       cartItems: cartItems?.items.map((singleCartItem) => ({
@@ -86,7 +117,7 @@ function ShoppingCheckout() {
     };
 
     dispatch(createNewOrder(orderData)).then((data) => {
-      console.log(data, "sangam");
+      // console.log(data, "sangam");
       if (data?.payload?.success) {
         setIsPaymemntStart(true);
       } else {
