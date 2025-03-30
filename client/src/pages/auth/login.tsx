@@ -17,7 +17,7 @@ interface FormData {
 }
 
 function AuthLogin() {
-  const [formData, setFormData] = useState(initialState);
+  const [formData, setFormData] = useState<FormData>(initialState);
   const dispatch = useAppDispatch();
   const { toast } = useToast();
 

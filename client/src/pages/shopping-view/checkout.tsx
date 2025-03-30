@@ -67,8 +67,7 @@ function ShoppingCheckout() {
       : 0;
 
   function handleInitiatePaypalPayment() {
-    // @ts-expect-error
-    if (cartItems.length === 0) {
+    if (cartItems?.items.length === 0) {
       toast({
         title: "Your cart is empty. Please add items to proceed",
         variant: "destructive",

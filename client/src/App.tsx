@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 import AuthLayout from "./components/auth/layout";
 import AuthLogin from "./pages/auth/login";
 import AuthRegister from "./pages/auth/register";
@@ -23,6 +23,9 @@ import AdminFeatures from "./pages/admin-view/features";
 import ShoppingCheckout from "./pages/shopping-view/checkout";
 import PaypalReturnPage from "./pages/shopping-view/paypal-return";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
+import Cart from "./pages/shopping-view/cart";
+import CheckOut from "./pages/shopping-view/checkout1";
+import Login from "./pages/auth/login1";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useAppSelector(
@@ -54,11 +57,13 @@ function App() {
           path="/auth"
           element={
             <CheckAuth isAuthenticated={isAuthenticated} user={user}>
-              <AuthLayout />
+              {/* <AuthLayout /> */}
+              <Outlet />
             </CheckAuth>
           }
         >
           <Route path="login" element={<AuthLogin />} />
+          <Route path="login1" element={<Login />} />
           <Route path="register" element={<AuthRegister />} />
         </Route>
         <Route
@@ -85,10 +90,12 @@ function App() {
           <Route path="home" element={<ShoppingHome />} />
           <Route path="listing" element={<ShoppingListing />} />
           <Route path="checkout" element={<ShoppingCheckout />} />
+          <Route path="checkout1" element={<CheckOut />} />
           <Route path="account" element={<ShoppingAccount />} />
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="search" element={<SearchProducts />} />
+          <Route path="cart" element={<Cart />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />

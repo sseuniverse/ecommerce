@@ -24,8 +24,8 @@ const initialAddressFormData = {
 interface AddressPropsC {
   setCurrentSelectedAddress?: React.Dispatch<
     React.SetStateAction<AddressProps | null>
-  >; // Replace 'any' with the actual type if known
-  selectedId?: AddressProps | null; // Adjust the type based on your application's requirements
+  >;
+  selectedId?: AddressProps | null;
 }
 
 function Address({ setCurrentSelectedAddress, selectedId }: AddressPropsC) {

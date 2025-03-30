@@ -34,7 +34,7 @@ function MenuItems() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams)
+  console.log(searchParams);
 
   function handleNavigate(getCurrentMenuItem: MenuLinks) {
     sessionStorage.removeItem("filters");
@@ -82,6 +82,9 @@ function HeaderRightContent() {
     dispatch(logoutUser());
   }
 
+  const cartItemsNo =
+    cartItems?.items.reduce((total, item) => total + item.quantity, 0) || 0;
+
   useEffect(() => {
     dispatch(fetchCartItems(user?.id!));
   }, [dispatch]);
@@ -89,26 +92,29 @@ function HeaderRightContent() {
   return (
     <div className="flex lg:items-center lg:flex-row flex-col gap-4">
       <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
-        <Button
-          onClick={() => setOpenCartSheet(true)}
-          variant="outline"
-          size="icon"
-          className="relative"
-        >
-          <ShoppingCart className="w-6 h-6" />
-          <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
-            {cartItems?.items?.length || 0}
-          </span>
-          <span className="sr-only">User cart</span>
-        </Button>
-        <UserCartWrapper
+        <Link to="/shop/cart">
+          <Button
+            // onClick={() => setOpenCartSheet(true)}
+            variant="outline"
+            size="icon"
+            className="relative"
+          >
+            <ShoppingCart className="w-6 h-6" />
+            <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
+              {/* {cartItems?.items?.length || 0} */}
+              {cartItemsNo}
+            </span>
+            <span className="sr-only">User cart</span>
+          </Button>
+        </Link>
+        {/* <UserCartWrapper
           setOpenCartSheet={setOpenCartSheet}
           cartItems={
             cartItems && cartItems.items && cartItems.items.length > 0
               ? cartItems.items
               : []
           }
-        />
+        /> */}
       </Sheet>
 
       <DropdownMenu>
