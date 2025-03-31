@@ -1,6 +1,6 @@
 import React from "react";
 
-function localStorageAvailable() {
+export function localStorageAvailable() {
   try {
     // Incognito mode might reject access to the localStorage for security reasons.
     // window isn't defined on Node.js
@@ -16,7 +16,7 @@ function localStorageAvailable() {
   }
 }
 
-export default function useLocalStorage<ValueType>(
+export function useLocalStorage<ValueType>(
   key: string,
   defaultValue: ValueType
 ) {

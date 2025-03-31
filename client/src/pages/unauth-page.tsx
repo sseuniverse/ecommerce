@@ -1,4 +1,4 @@
-import { useRoutes } from "@/lib/goBack";
+import { useRoutes } from "@/hooks/useGoBack";
 import { Link } from "react-router-dom";
 
 export default function UnauthPage() {

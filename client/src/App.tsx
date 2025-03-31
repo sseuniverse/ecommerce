@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
-import AuthLayout from "./components/auth/layout";
+// import AuthLayout from "./components/auth/layout";
 import AuthLogin from "./pages/auth/login";
 import AuthRegister from "./pages/auth/register";
 import NotFound from "./pages/not-found";
@@ -25,7 +25,6 @@ import PaypalReturnPage from "./pages/shopping-view/paypal-return";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import Cart from "./pages/shopping-view/cart";
 import CheckOut from "./pages/shopping-view/checkout1";
-import Login from "./pages/auth/login1";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useAppSelector(
@@ -63,7 +62,6 @@ function App() {
           }
         >
           <Route path="login" element={<AuthLogin />} />
-          <Route path="login1" element={<Login />} />
           <Route path="register" element={<AuthRegister />} />
         </Route>
         <Route
