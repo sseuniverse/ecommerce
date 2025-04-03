@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import ShoppingHeader from "./header";
+import ShoppingHeader from "./header1";
 import Footer from "../common/footer";
 
 function ShoppingLayout() {

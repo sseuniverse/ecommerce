@@ -190,6 +190,39 @@ export const shoppingViewHeaderMenuItems: MenuLinks[] = [
   },
 ];
 
+export const shoppingAccountHeader: MenuLinks[] = [
+  {
+    id: "account",
+    label: "My Account",
+    path: "/me/account",
+  },
+  {
+    id: "order",
+    label: "My Orders",
+    path: "/me/orders",
+  },
+  {
+    id: "settings",
+    label: "Settings",
+    path: "/me/settings",
+  },
+  {
+    id: "favourites",
+    label: "Favourites",
+    path: "/me/favourites",
+  },
+  {
+    id: "address",
+    label: "Delivery Addresses",
+    path: "/me/address",
+  },
+  // {
+  //   id: "",
+  //   label: "",
+  //   path: "/me/",
+  // },
+];
+
 export const categoryOptionsMap = {
   men: "Men",
   women: "Women",

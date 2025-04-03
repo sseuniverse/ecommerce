@@ -1,4 +1,4 @@
-import { useRoutes } from "@/hooks/useGoBack";
+import { useRoutes } from "@/hooks/useRoutes";
 import { Link } from "react-router-dom";
 
 function NotFound() {
