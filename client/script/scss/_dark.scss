@@ -1,0 +1,106 @@
+$primary-shades: (50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950);
+
+// All classes
+@each $shade in $primary-shades {
+  .dark\:bg-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:text-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:decoration-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      text-decoration-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:border-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      border-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:outline-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      outline-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:shadow-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      --tw-shadow-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:inset-shadow-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      --tw-inset-shadow-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:ring-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      --tw-ring-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:inset-ring-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      --tw-inset-ring-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:accent-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      accent-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:caret-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      caret-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:fill-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      fill: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .dark\:stroke-primary-#{$shade} {
+    @media (prefers-color-scheme: dark) {
+      stroke: var(--colors-primary-#{$shade});
+    }
+  }
+}

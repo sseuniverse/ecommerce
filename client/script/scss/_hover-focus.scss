@@ -1,0 +1,158 @@
+$primary-shades: (50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950);
+
+// All classes
+@each $shade in $primary-shades {
+  .hover\:focus\:bg-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          background-color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:text-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:decoration-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          text-decoration-color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:border-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          border-color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:outline-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          outline-color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:shadow-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          --tw-shadow-color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:inset-shadow-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          --tw-inset-shadow-color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:ring-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          --tw-ring-color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:inset-ring-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          --tw-inset-ring-color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:accent-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          accent-color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:caret-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          caret-color: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:fill-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          fill: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .hover\:focus\:stroke-primary-#{$shade} {
+    &:hover {
+      @media (hover: hover) {
+        &:focus {
+          stroke: var(--colors-primary-#{$shade});
+        }
+      }
+    }
+  }
+}

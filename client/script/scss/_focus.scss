@@ -1,0 +1,106 @@
+$primary-shades: (50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950);
+
+// All classes
+@each $shade in $primary-shades {
+  .focus\:bg-primary-#{$shade} {
+    &:focus {
+      background-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:text-primary-#{$shade} {
+    &:focus {
+      color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:decoration-primary-#{$shade} {
+    &:focus {
+      text-decoration-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:border-primary-#{$shade} {
+    &:focus {
+      border-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:outline-primary-#{$shade} {
+    &:focus {
+      outline-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:shadow-primary-#{$shade} {
+    &:focus {
+      --tw-shadow-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:inset-shadow-primary-#{$shade} {
+    &:focus {
+      --tw-inset-shadow-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:ring-primary-#{$shade} {
+    &:focus {
+      --tw-ring-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:inset-ring-primary-#{$shade} {
+    &:focus {
+      --tw-inset-ring-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:accent-primary-#{$shade} {
+    &:focus {
+      accent-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:caret-primary-#{$shade} {
+    &:focus {
+      caret-color: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:fill-primary-#{$shade} {
+    &:focus {
+      fill: var(--colors-primary-#{$shade});
+    }
+  }
+}
+
+@each $shade in $primary-shades {
+  .focus\:stroke-primary-#{$shade} {
+    &:focus {
+      stroke: var(--colors-primary-#{$shade});
+    }
+  }
+}

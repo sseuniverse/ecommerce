@@ -1,0 +1,80 @@
+$primary-shades: (50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950);
+
+// All classes
+@each $shade in $primary-shades {
+  .bg-primary-#{$shade} {
+    background-color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .text-primary-#{$shade} {
+    color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .decoration-primary-#{$shade} {
+    text-decoration-color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .border-primary-#{$shade} {
+    border-color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .outline-primary-#{$shade} {
+    outline-color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .shadow-primary-#{$shade} {
+    --tw-shadow-color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .inset-shadow-primary-#{$shade} {
+    --tw-inset-shadow-color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .ring-primary-#{$shade} {
+    --tw-ring-color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .inset-ring-primary-#{$shade} {
+    --tw-inset-ring-color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .accent-primary-#{$shade} {
+    accent-color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .caret-primary-#{$shade} {
+    caret-color: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .fill-primary-#{$shade} {
+    fill: var(--colors-primary-#{$shade});
+  }
+}
+
+@each $shade in $primary-shades {
+  .stroke-primary-#{$shade} {
+    stroke: var(--colors-primary-#{$shade});
+  }
+}
