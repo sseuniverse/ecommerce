@@ -1,162 +1,63 @@
-import {
-  localStorageAvailable,
-  useLocalStorage,
-} from "@/hooks/useLocalStorage";
-import React, { useCallback, useMemo } from "react";
+import React from "react";
+import { SettingsProps } from "@/types";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { checkAuth } from "@/store/auth-slice";
+import { editSettings, fetchSettings } from "@/store/setting-slice";
 
-export type ThemeModeValue = "light" | "dark";
-export type ThemeDirectionValue = "rtl" | "ltr";
-export type ThemeColorPresetsValue =
-  | "default"
-  | "cyan"
-  | "purple"
-  | "blue"
-  | "orange"
-  | "red";
+interface SettingsContext {
+  isLoading: boolean;
+  settings: SettingsProps;
+  fetchSetting: (userId: string | null) => void;
+  updateSettings: (userId: string | null, formData: any) => void;
+}
 
-type SettingsProviderProps = {
-  children: React.ReactNode;
+export const SettingContext = React.createContext<SettingsContext | undefined>(
+  undefined
+);
+export const SettingsProvider: React.FC<React.PropsWithChildren> = ({
+  children,
+}) => {
+  const dispatch = useAppDispatch();
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isLoading, setting } = useAppSelector((state) => state.settings);
+
+  const fetchSetting = (userId: string | null) => {
+    if (isAuthenticated && userId) {
+      dispatch(fetchSettings(userId));
+    } else {
+      const localSettings = localStorage.getItem("settings");
+      return localSettings;
+    }
+  };
+
+  const updateSettings = (userId: string | null, formData: any) => {
+    if (isAuthenticated && userId) {
+      dispatch(editSettings({ userId, formData }));
+    } else {
+      localStorage.setItem("userSettings", JSON.stringify(formData));
+    }
+  };
+
+  React.useEffect(() => {
+    fetchSetting(user ? user.id : null);
+  }, [user, isAuthenticated]);
+
+  React.useEffect(() => {
+    dispatch(checkAuth());
+  }, [dispatch]);
+  return (
+    <SettingContext.Provider
+      value={{ isLoading, settings: setting, fetchSetting, updateSettings }}
+    >
+      {children}
+    </SettingContext.Provider>
+  );
 };
 
-// export type ThemeContrastValue = 'default' | 'bold';
-// export type ThemeLayoutValue = 'vertical' | 'horizontal' | 'mini';
-// export type ThemeStretchValue = boolean;
-
-export type SettingsValueProps = {
-  themeMode: ThemeModeValue;
-  // themeLayout: ThemeLayoutValue;
-  // themeStretch: ThemeStretchValue;
-  // themeContrast: ThemeContrastValue;
-  themeDirection: ThemeDirectionValue;
-  themeColorPresets: ThemeColorPresetsValue;
-};
-
-type SettingsContextProps = SettingsValueProps & {
-  onToggleMode: VoidFunction;
-  onChangeMode: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onToggleDirection: VoidFunction;
-  onChangeDirection: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  // onChangeDirectionByLang: (lang: string) => void;
-  // onToggleLayout: VoidFunction;
-  // onChangeLayout: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  // onToggleContrast: VoidFunction;
-  // onChangeContrast: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeColorPresets: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onToggleStretch: VoidFunction;
-  onResetSetting: VoidFunction;
-};
-
-export const defaultSettings: SettingsValueProps = {
-  themeMode: "light",
-  themeDirection: "ltr",
-  // themeContrast: "default",
-  // themeLayout: "vertical",
-  themeColorPresets: "default",
-  // themeStretch: false,
-};
-
-const initialState: SettingsContextProps = {
-  ...defaultSettings,
-  onToggleMode: () => {},
-  onChangeMode: () => {},
-  onToggleDirection: () => {},
-  onChangeDirection: () => {},
-  // onChangeDirectionByLang: () => {},
-  // onToggleLayout: () => {},
-  // onChangeLayout: () => {},
-  // onToggleContrast: () => {},
-  // onChangeContrast: () => {},
-  onChangeColorPresets: () => {},
-  // presetsColor: defaultPreset,
-  // presetsOption: [],
-  onToggleStretch: () => {},
-  onResetSetting: () => {},
-};
-
-export const SettingsContext = React.createContext(initialState);
-
-export const useSettingsContext = () => {
-  const context = React.useContext(SettingsContext);
-
-  if (!context)
-    throw new Error("useSettingsContext must be use inside SettingsProvider");
-
+export const useSettings = () => {
+  const context = React.useContext(SettingContext);
+  if (context === undefined) {
+    throw new Error("useSettings must be used within a SettingsProvider");
+  }
   return context;
 };
-
-export function SettingsProvider({ children }: SettingsProviderProps) {
-  const [settings, setSettings] = useLocalStorage("settings", defaultSettings);
-  const storageAvailable = localStorageAvailable();
-
-  const onToggleMode = useCallback(() => {
-    const themeMode = settings.themeMode === "light" ? "dark" : "light";
-    setSettings({ ...settings, themeMode });
-  }, [setSettings, settings]);
-
-  const onChangeMode = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const themeMode = event.target.value;
-      setSettings({ ...settings, themeMode });
-    },
-    [setSettings, settings]
-  );
-
-  // Direction
-  const onToggleDirection = useCallback(() => {
-    const themeDirection = settings.themeDirection === "rtl" ? "ltr" : "rtl";
-    setSettings({ ...settings, themeDirection });
-  }, [setSettings, settings]);
-
-  const onChangeDirection = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const themeDirection = event.target.value;
-      setSettings({ ...settings, themeDirection });
-    },
-    [setSettings, settings]
-  );
-
-  //   const onChangeDirectionByLang = useCallback(
-  //     (lang: string) => {
-  //       const themeDirection = lang === 'ar' ? 'rtl' : 'ltr';
-  //       setSettings({ ...settings, themeDirection });
-  //     },
-  //     [setSettings, settings]
-  //   );
-
-  // Color
-  const onChangeColorPresets = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const themeColorPresets = event.target.value;
-      setSettings({ ...settings, themeColorPresets });
-    },
-    [setSettings, settings]
-  );
-
-  // Reset
-  const onResetSetting = useCallback(() => {
-    setSettings(defaultSettings);
-  }, [setSettings]);
-
-  const memoizedValue = useMemo(
-    () => ({
-      ...settings,
-      onToggleMode,
-      onChangeMode,
-      onToggleDirection,
-      onChangeDirection,
-      onChangeColorPresets,
-      onResetSetting,
-    }),
-    [
-      settings,
-      onToggleMode,
-      onChangeMode,
-      onToggleDirection,
-      onChangeDirection,
-      onChangeColorPresets,
-      onResetSetting,
-    ]
-  );
-
-  return <SettingsContext.Provider value={memoizedValue}></SettingsContext.Provider>
-}

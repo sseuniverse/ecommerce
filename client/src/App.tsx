@@ -25,6 +25,7 @@ import PaypalReturnPage from "./pages/shopping-view/paypal-return";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import Cart from "./pages/shopping-view/cart";
 import CheckOut from "./pages/shopping-view/checkout1";
+import Settings from "./components/common/settings";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useAppSelector(
@@ -41,7 +42,7 @@ function App() {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="flex flex-col overflow-hidden bg-white">
+    <div className="flex flex-col overflow-hidden bg-white relative">
       <Routes>
         <Route
           path="/"
@@ -98,6 +99,7 @@ function App() {
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Settings />
     </div>
   );
 }

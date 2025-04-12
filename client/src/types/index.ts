@@ -104,3 +104,37 @@ export interface ReviewProps {
   createdAt: string;
   updatedAt: string;
 }
+
+type PresetsType =
+  | "rose"
+  | "pink"
+  | "fuchsia"
+  | "purple"
+  | "violet"
+  | "indigo"
+  | "blue"
+  | "sky"
+  | "cyan"
+  | "teal"
+  | "emerald"
+  | "green"
+  | "lime"
+  | "yellow"
+  | "amber"
+  | "orange"
+  | "red"
+  | "stone"
+  | "neutral"
+  | "zinc"
+  | "gray"
+  | "slate";
+
+export interface SettingsProps {
+  _id: string;
+  userId: string;
+  colorMode: "dark" | "light" | "system";
+  direction: "ltr" | "rtl";
+  presets: PresetsType;
+  createdAt: string;
+  updatedAt: string;
+}

@@ -1,28 +1,12 @@
-import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from "lucide-react";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
-import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
-import { Button } from "../ui/button";
-import { shoppingViewHeaderMenuItems } from "@/config";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import { logoutUser } from "@/store/auth-slice";
-import UserCartWrapper from "./cart-wrapper";
-import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { shoppingViewHeaderMenuItems, shoppingAccountHeader } from "@/config";
+import React from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice";
-import { Label } from "../ui/label";
 import { useAppDispatch, useAppSelector } from "@/store/store";
+import { useRoutes } from "@/hooks/useRoutes";
+import { logoutUser } from "@/store/auth-slice";
+import { Settings as IconSettings } from "lucide-react";
+import "../../css/header.css";
 
 interface MenuLinks {
   id: string;
@@ -31,10 +15,8 @@ interface MenuLinks {
 }
 
 function MenuItems() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { navigator, location } = useRoutes();
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams);
 
   function handleNavigate(getCurrentMenuItem: MenuLinks) {
     sessionStorage.removeItem("filters");
@@ -53,30 +35,32 @@ function MenuItems() {
       ? setSearchParams(
           new URLSearchParams(`?category=${getCurrentMenuItem.id}`)
         )
-      : navigate(getCurrentMenuItem.path);
+      : navigator(getCurrentMenuItem.path);
   }
 
   return (
-    <nav className="flex flex-col mb-3 lg:mb-0 lg:items-center gap-6 lg:flex-row">
+    <ul className="hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center">
       {shoppingViewHeaderMenuItems.map((menuItem) => (
-        <Label
-          onClick={() => handleNavigate(menuItem)}
-          className="text-sm font-medium cursor-pointer"
-          key={menuItem.id}
-        >
-          {menuItem.label}
-        </Label>
+        <li className={menuItem.id !== "home" ? "shrink-0" : ""}>
+          <label
+            onClick={() => handleNavigate(menuItem)}
+            className="flex text-sm font-medium text-gray-900 hover:text-primary-700 dark:text-white dark:hover:text-primary-500"
+            key={menuItem.id}
+          >
+            {menuItem.label}
+          </label>
+        </li>
       ))}
-    </nav>
+    </ul>
   );
 }
 
 function HeaderRightContent() {
   const { user } = useAppSelector((state) => state.auth);
   const { cartItems } = useAppSelector((state) => state.shopCart);
-  const [openCartSheet, setOpenCartSheet] = useState(false);
-  const navigate = useNavigate();
+  const [openCartSheet, setOpenCartSheet] = React.useState(false);
   const dispatch = useAppDispatch();
+  const { navigator } = useRoutes();
 
   function handleLogout() {
     dispatch(logoutUser());
@@ -85,96 +69,149 @@ function HeaderRightContent() {
   const cartItemsNo =
     cartItems?.items.reduce((total, item) => total + item.quantity, 0) || 0;
 
-  useEffect(() => {
+  React.useEffect(() => {
     dispatch(fetchCartItems(user?.id!));
   }, [dispatch]);
 
-  return (
-    <div className="flex lg:items-center lg:flex-row flex-col gap-4">
-      <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
-        <Link to="/shop/cart">
-          <Button
-            // onClick={() => setOpenCartSheet(true)}
-            variant="outline"
-            size="icon"
-            className="relative"
-          >
-            <ShoppingCart className="w-6 h-6" />
-            <span className="absolute top-[-5px] right-[2px] font-bold text-sm">
-              {/* {cartItems?.items?.length || 0} */}
-              {cartItemsNo}
-            </span>
-            <span className="sr-only">User cart</span>
-          </Button>
-        </Link>
-        {/* <UserCartWrapper
-          setOpenCartSheet={setOpenCartSheet}
-          cartItems={
-            cartItems && cartItems.items && cartItems.items.length > 0
-              ? cartItems.items
-              : []
-          }
-        /> */}
-      </Sheet>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("myCartDropdownButton1")?.click();
+  });
 
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Avatar className="bg-black">
-            <AvatarFallback className="bg-black text-white font-extrabold">
-              {user?.userName[0].toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent side="right" className="w-56">
-          <DropdownMenuLabel>Logged in as {user?.userName}</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => navigate("/shop/account")}>
-            <UserCog className="mr-2 h-4 w-4" />
-            Account
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+  return (
+    <div className="flex items-center lg:space-x-2">
+      <button
+        className="fixed bottom-4 right-4 inline-flex items-center justify-center text-sm font-medium disabled:pointer-events-none disabled:opacity-50 border rounded-2xl w-12 h-12 bg-gray-400 hover:bg-gray-700 m-0 cursor-pointer border-gray-200 bg-none p-0 normal-case leading-5 hover:text-gray-900"
+        type="button"
+        aria-haspopup="dialog"
+        aria-expanded="true"
+        data-state="closed"
+      >
+        <IconSettings className="text-black block fill-primart-500 border-gray-200 align-middle animate-spin" />
+      </button>
+      <Link
+        to="/shop/cart"
+        type="button"
+        className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white relative"
+      >
+        {/* <span className="sr-only">Cart</span> */}
+        <svg
+          className="w-5 h-5 lg:me-1"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"
+          />
+        </svg>
+        <span className="hidden sm:flex">My Cart</span>
+        <div className="absolute inline-flex items-center justify-center w-[1rem] h-[1rem] font-medium text-[.75rem]/[1rem] sse-colors rounded-[9999px] top-[-.375rem] -end-1.5">
+          {cartItemsNo}
+        </div>
+      </Link>
+
+      <button
+        id="userDropdownButton1"
+        data-dropdown-toggle="userDropdown1"
+        type="button"
+        className="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white"
+      >
+        <svg
+          className="w-5 h-5 me-1"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-width="2"
+            d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+          />
+        </svg>
+        Account
+        {/* <svg
+          className="w-4 h-4 text-gray-900 dark:text-white ms-1"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m19 9-7 7-7-7"
+          />
+        </svg> */}
+      </button>
+
+      <div
+        id="userDropdown1"
+        className="hidden z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700"
+      >
+        <ul className="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
+          {shoppingAccountHeader.map((menuItem) => (
+            <li>
+              <Link
+                to={menuItem.path}
+                className="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"
+                key={menuItem.id}
+              >
+                {menuItem.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
 
-function ShoppingHeader() {
-  // const { isAuthenticated } = useAppSelector((state) => state.auth);
-
+function Logo() {
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="flex h-16 items-center justify-between px-4 md:px-6">
-        <Link to="/shop/home" className="flex items-center gap-2">
-          <HousePlug className="h-6 w-6" />
-          <span className="font-bold">Ecommerce</span>
-        </Link>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button variant="outline" size="icon" className="lg:hidden">
-              <Menu className="h-6 w-6" />
-              <span className="sr-only">Toggle header menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="w-full max-w-xs">
-            <MenuItems />
-            <HeaderRightContent />
-          </SheetContent>
-        </Sheet>
-        <div className="hidden lg:block">
-          <MenuItems />
-        </div>
-
-        <div className="hidden lg:block">
-          <HeaderRightContent />
-        </div>
-      </div>
-    </header>
+    <div className="shrink-0">
+      <Link to="/" title="" className="">
+        <img
+          className="block w-auto h-8 dark:hidden"
+          src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full.svg"
+          alt=""
+        />
+        <img
+          className="hidden w-auto h-8 dark:block"
+          src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full-dark.svg"
+          alt=""
+        />
+      </Link>
+    </div>
   );
 }
 
-export default ShoppingHeader;
+export default function ShoppingHeader() {
+  return (
+    <nav className="bg-white dark:bg-gray-800 antialiased">
+      <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-8">
+            <Logo />
+            <MenuItems />
+          </div>
+
+          <HeaderRightContent />
+        </div>
+      </div>
+    </nav>
+  );
+}

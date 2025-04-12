@@ -21,6 +21,7 @@ import {
   CategoryProps,
 } from "@/config/shop";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import Category from "@/components/shopping-view/category";
 
 interface HandleNavigateToListingPage {
   getCurrentItem: CategoryProps;
@@ -143,7 +144,7 @@ export default function ShoppingHome() {
           <ChevronRightIcon className="w-4 h-4" />
         </Button>
       </div>
-      <section className="py-12 bg-gray-50">
+      {/* <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-8">
             Shop by category
@@ -168,7 +169,8 @@ export default function ShoppingHome() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+      <Category />
 
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4">
