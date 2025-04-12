@@ -16,13 +16,14 @@ const shopSearchRouter = require("./routes/shop/search-routes");
 const shopReviewRouter = require("./routes/shop/review-routes");
 
 const commonFeatureRouter = require("./routes/common/feature-routes");
+const themesRoute = require("./routes/settings/settingRoute");
 
 const app = express();
 connectDB(mongoURL);
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["https://localhost:5173", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
     allowedHeaders: [
@@ -52,5 +53,6 @@ app.use("/api/shop/search", shopSearchRouter);
 app.use("/api/shop/review", shopReviewRouter);
 
 app.use("/api/common/feature", commonFeatureRouter);
+app.use("/api/settings/theme", themesRoute);
 
 app.listen(port, () => console.log(`Server is running on port ${port}`));
