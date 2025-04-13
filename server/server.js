@@ -55,4 +55,4 @@ app.use("/api/shop/review", shopReviewRouter);
 app.use("/api/common/feature", commonFeatureRouter);
 app.use("/api/settings/theme", themesRoute);
 
-app.listen(port, () => console.log(`Server is running on port ${port}`));
+app.listen(port, "0.0.0.0", () => console.log(`Server is running on port ${port}`));

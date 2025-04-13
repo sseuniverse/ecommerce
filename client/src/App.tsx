@@ -26,6 +26,7 @@ import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import Cart from "./pages/shopping-view/cart";
 import CheckOut from "./pages/shopping-view/checkout1";
 import Settings from "./components/common/settings";
+import MaintenancePage from "./pages/maintainence";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useAppSelector(
@@ -42,7 +43,7 @@ function App() {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="flex flex-col overflow-hidden bg-white relative">
+    <div className="flex flex-col overflow-hidden bg-white dark:bg-[#020618] relative">
       <Routes>
         <Route
           path="/"
@@ -98,6 +99,7 @@ function App() {
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="maintenance" element={<MaintenancePage />} />
       </Routes>
       <Settings />
     </div>
